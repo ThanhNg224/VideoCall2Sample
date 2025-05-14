@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Stringee Video Test</title>
+        <meta charset="utf-8">
+
+        <link rel="stylesheet" href="css/style.css">
+        <style>
+            #answerBtn, #rejectBtn {
+                background-color: green;
+                color: white;
+            }
+            #incoming-call-div {
+                display: none;
+            }
+        </style>
+
+        <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+        <script type="text/javascript" src="https://cdn.stringee.com/sdk/web/latest/stringee-web-sdk.min.js"></script>
+
+        <script type="text/javascript" src="./call2_demo.js"></script>
+    </head>
+
+    <body>
+        <div>
+
+            <input id="userIdToAuthen" type="text" name="userIdToAuthen" style="width: 200px;" placeholder="User ID to authen" value="customer_0909982668">
+            <button id="loginBtn" onclick="testLogin()">Login</button>
+
+
+            Logged in: <span id="loggedUserId" style="color: red">Not logged</span>
+            | SDK Version: <span id="sdkVersion" style="color: blue"></span>
+
+
+            <br/><br/>
+
+            Call status: <span id="txtStatus" style="color: red">Not started</span>
+
+            <input id="toNumberBtn" type="text" name="toNumberBtn" style="width: 200px;" placeholder="Call to number" value="huydn">
+
+            <select id="videoDimensions">
+                <option value="720p">720p (1280x720)</option>
+                <option value="480p">480p (854x480)</option>
+                <option value="360p">360p (640x360)</option>
+                <option value="240p">240p (426x240)</option>
+            </select>
+
+            <button disabled="" id="call2Btn" onclick="testCall2()">Make Call</button>
+            <button disabled="" id="call2HangupBtn" onclick="testHangup()">Hangup</button>
+            
+            <button disabled="" id="muteBtn" onclick="testMute()">Mute</button>
+            <button disabled="" id="enableVideoBtn" onclick="testDisableVideo()">Enable/Disable video</button>
+            <button id="switchCameraBtn" onclick="switchCamera()">Switch Camera (mobile only)</button>
+            <button id="switchCameraBtn" onclick="shareScreen()">Share Screen</button>
+        </div>
+
+        <div id="incomingcallBox" style="display: none; background-color: yellow; padding: 5px; width: 600px;">
+            Incoming call from: <span id="incomingCallFrom" style="color: blue"></span>
+
+            <button onclick="testAnswer()">Answer</button>
+            <button onclick="testReject()">Reject</button>
+        </div>
+
+        <div id="local_videos" style="height: 200px">
+            Local videos:
+            <br/>
+        </div>
+        
+        <div id="remote_videos">
+            Remote videos
+            <br/>
+        </div>
+        
+        <div>
+			<br/>
+			Audio sent: <span id="audioSent"></span>
+			<br/>
+			Video sent: <span id="videoSent"></span>
+
+			<br/><br/>
+			Audio received: <span id="audioReceived"></span>
+			<br/>
+			Video received: <span id="videoReceived"></span>
+		</div>
+
+    </body>
+
+</html>

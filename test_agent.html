@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Stringee Video Call</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" href="css/style.css">
+    <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="https://cdn.stringee.com/sdk/web/latest/stringee-web-sdk.min.js"></script>
+    <script type="text/javascript" src="./call2_demo.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>Stringee Video Call</h1>
+            <div class="status-bar">
+                <div class="status-item">
+                    <span class="status-label">Login:</span>
+                    <span id="loggedUserId" class="status-value not-logged">Not logged</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">SDK Version:</span>
+                    <span id="sdkVersion" class="status-value"></span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">Call Status:</span>
+                    <span id="txtStatus" class="status-value not-started">Not started</span>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <section class="card" id="login-section">
+                <h2>Authentication</h2>
+                <div class="form-row">
+                    <input id="userIdToAuthen" type="text" name="userIdToAuthen" placeholder="User ID to authenticate" value="staff001">
+                    <button id="loginBtn" class="primary-btn" onclick="testLogin()">Login</button>
+                </div>
+            </section>
+
+            <section class="card" id="call-section">
+                <h2>Call Controls</h2>
+                <div class="form-row">
+                    <input id="toNumberBtn" type="text" name="toNumberBtn" placeholder="Call to number" value="customer_0909982668">
+                    <div class="select-wrapper">
+                        <select id="videoDimensions">
+                            <option value="720p">720p (1280x720)</option>
+                            <option value="480p">480p (854x480)</option>
+                            <option value="360p">360p (640x360)</option>
+                            <option value="240p">240p (426x240)</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="button-group">
+                    <button disabled id="call2Btn" class="success-btn" onclick="testCall2()">
+                        <span class="icon">📞</span> Make Call
+                    </button>
+                    <button disabled id="call2HangupBtn" class="danger-btn" onclick="testHangup()">
+                        <span class="icon">🔴</span> Hang Up
+                    </button>
+                </div>
+
+                <div class="button-group">
+                    <button disabled id="muteBtn" class="secondary-btn" onclick="testMute()">
+                        <span class="icon">🔇</span> Mute
+                    </button>
+                    <button disabled id="enableVideoBtn" class="secondary-btn" onclick="testDisableVideo()">
+                        <span class="icon">📹</span> Toggle Video
+                    </button>
+                    <button id="switchCameraBtn" class="secondary-btn" onclick="switchCamera()">
+                        <span class="icon">🔄</span> Switch Camera
+                    </button>
+                </div>
+
+                <div class="button-group">
+                    <button class="secondary-btn" onclick="sendInfo({a: 'hello', b: 1})">Send Info 1</button>
+                    <button class="secondary-btn" onclick="sendInfo('hello')">Send Info 2</button>
+                </div>
+            </section>
+
+            <section class="card" id="transfer-section">
+                <h2>Transfer Options</h2>
+                <div class="form-row">
+                    <input id="transferNumberInput" type="text" name="transferNumberInput" placeholder="Transfer to number" value="staff002">
+                    <div class="select-wrapper">
+                        <select id="toType">
+                            <option value="agent">Agent</option>
+                            <option value="queue">Queue</option>
+                        </select>
+                    </div>
+                    <div class="select-wrapper">
+                        <select id="transferType">
+                            <option value="blind">Blind</option>
+                            <option value="attended">Attended</option>
+                            <option value="conference">Conference</option>
+                            <option value="coach">Coach</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="button-group">
+                    <button class="primary-btn" onclick="testTransfer()">Transfer</button>
+                    <button id="holdBtn" class="secondary-btn" onclick="testHold()">Hold</button>
+                    <button id="leaveBtn" class="secondary-btn" onclick="testLeave()">Leave</button>
+                </div>
+            </section>
+
+            <section class="card incoming-call" id="incomingcallBox">
+                <h2>Incoming Call</h2>
+                <p>From: <span id="incomingCallFrom" class="highlight"></span></p>
+                <div class="button-group">
+                    <button class="success-btn" onclick="testAnswer()">Answer</button>
+                    <button class="danger-btn" onclick="testReject()">Reject</button>
+                </div>
+            </section>
+
+            <div class="video-container">
+                <section class="video-panel" id="local_videos">
+                    <h3>Local Video</h3>
+                    <div class="video-content"></div>
+                </section>
+                
+                <section class="video-panel" id="remote_videos">
+                    <h3>Remote Video</h3>
+                    <div class="video-content"></div>
+                </section>
+            </div>
+
+            <section class="card stats-panel">
+                <h2>Stream Statistics</h2>
+                <div class="stats-grid">
+                    <div class="stats-item">
+                        <div class="stats-label">Audio Sent:</div>
+                        <div id="audioSent" class="stats-value">-</div>
+                    </div>
+                    <div class="stats-item">
+                        <div class="stats-label">Video Sent:</div>
+                        <div id="videoSent" class="stats-value">-</div>
+                    </div>
+                    <div class="stats-item">
+                        <div class="stats-label">Audio Received:</div>
+                        <div id="audioReceived" class="stats-value">-</div>
+                    </div>
+                    <div class="stats-item">
+                        <div class="stats-label">Video Received:</div>
+                        <div id="videoReceived" class="stats-value">-</div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+</body>
+</html>
